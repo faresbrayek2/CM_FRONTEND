@@ -5,6 +5,8 @@ import TextField from '@mui/material/TextField'
 import IconButton from '@mui/material/IconButton'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import InputAdornment from '@mui/material/InputAdornment'
+import { Fire } from 'mdi-material-ui'
+import { Typography } from '@mui/material'
 
 // ** Icons Imports
 import Menu from 'mdi-material-ui/Menu'
@@ -12,6 +14,7 @@ import Magnify from 'mdi-material-ui/Magnify'
 
 // ** Type Import
 import { Settings } from 'src/@core/context/settingsContext'
+import Link from '@mui/material/Link'
 
 // ** Components
 import ModeToggler from 'src/@core/layouts/components/shared-components/ModeToggler'
@@ -57,6 +60,13 @@ const AppBarContent = (props: Props) => {
         />
       </Box>
       <Box className='actions-right' sx={{ display: 'flex', alignItems: 'center' }}>
+        <Link href='/seller/dashboard' sx={{ mr: 2, display: 'grid' }}>
+          <Fire />
+        </Link>
+        <Link href='/seller/dashboard' sx={{ mr: 2, display: 'grid' }}>
+          <Typography variant='subtitle1'>Seller</Typography>
+        </Link>
+
         <ModeToggler settings={settings} saveSettings={saveSettings} />
         <NotificationDropdown />
         <UserDropdown />

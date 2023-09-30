@@ -13,29 +13,24 @@ import TableCell from '@mui/material/TableCell'
 import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
 import TableContainer from '@mui/material/TableContainer'
+import Button from '@mui/material/Button'
 
 // ** Icons Imports
 import ChevronUp from 'mdi-material-ui/ChevronUp'
 import ChevronDown from 'mdi-material-ui/ChevronDown'
 
-const createData = (name: string, calories: number, fat: number, carbs: number, protein: number, price: number) => {
+const createData = (type: string, country: string, vbv: string, price: string, expiration: string) => {
   return {
-    name,
-    calories,
-    fat,
-    carbs,
-    protein,
+    type,
+    country,
+    vbv,
     price,
+    expiration,
     history: [
       {
         date: '2020-01-05',
-        customerId: '11091700',
-        amount: 3
-      },
-      {
-        date: '2020-01-02',
-        customerId: 'Anonymous',
-        amount: 1
+        customerId: 'seller1',
+        description: 'mafihach flous'
       }
     ]
   }
@@ -48,6 +43,14 @@ const Row = (props: { row: ReturnType<typeof createData> }) => {
   // ** State
   const [open, setOpen] = useState<boolean>(false)
 
+  // ** Define icons for each card type
+  const cardTypeIcons: { [key: string]: React.ReactNode } = {
+    Visa: <img src='/images/cards/visa.png' alt='Visa' width={25} />,
+    'Master Card': <img src='/images/cards/mastercard.png' alt='MasterCard' width={25} />,
+    'American Express': <img src='/images/cards/americanexpress.png' alt='American Express' width={25} />,
+    Discover: <img src='/images/cards/discover.png' alt='Discover' width={25} />
+  }
+
   return (
     <Fragment>
       <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
@@ -56,28 +59,32 @@ const Row = (props: { row: ReturnType<typeof createData> }) => {
             {open ? <ChevronUp /> : <ChevronDown />}
           </IconButton>
         </TableCell>
-        <TableCell component='th' scope='row'>
-          {row.name}
+        <TableCell align='left' sx={{ alignItems: 'center' }}>
+          {cardTypeIcons[row.type]}
+          {row.type}
         </TableCell>
-        <TableCell align='right'>{row.calories}</TableCell>
-        <TableCell align='right'>{row.fat}</TableCell>
-        <TableCell align='right'>{row.carbs}</TableCell>
-        <TableCell align='right'>{row.protein}</TableCell>
+        <TableCell align='right'>{row.country}</TableCell>
+        <TableCell align='right'>{row.price}</TableCell>
+
+        <TableCell align='right'>{row.vbv}</TableCell>
+
+        <TableCell align='right'>{row.expiration}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell colSpan={6} sx={{ py: '0 !important' }}>
           <Collapse in={open} timeout='auto' unmountOnExit>
             <Box sx={{ m: 2 }}>
               <Typography variant='h6' gutterBottom component='div'>
-                History
+                Details
               </Typography>
               <Table size='small' aria-label='purchases'>
                 <TableHead>
                   <TableRow>
-                    <TableCell>Date</TableCell>
-                    <TableCell>Customer</TableCell>
-                    <TableCell align='right'>Amount</TableCell>
-                    <TableCell align='right'>Total price ($)</TableCell>
+                    <TableCell>Added Date</TableCell>
+                    <TableCell>Seller Number</TableCell>
+                    <TableCell>Description</TableCell>
+                    <TableCell align='right'>Buy</TableCell>
+                    <TableCell align='right'>Check</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -87,8 +94,17 @@ const Row = (props: { row: ReturnType<typeof createData> }) => {
                         {historyRow.date}
                       </TableCell>
                       <TableCell>{historyRow.customerId}</TableCell>
-                      <TableCell align='right'>{historyRow.amount}</TableCell>
-                      <TableCell align='right'>{Math.round(historyRow.amount * row.price * 100) / 100}</TableCell>
+                      <TableCell>{historyRow.description}</TableCell>
+                      <TableCell align='right'>
+                        <Button variant='contained' color='success'>
+                          Buy
+                        </Button>
+                      </TableCell>
+                      <TableCell align='right'>
+                        <Button variant='contained' color='primary'>
+                          Check
+                        </Button>
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -102,11 +118,10 @@ const Row = (props: { row: ReturnType<typeof createData> }) => {
 }
 
 const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0, 3.99),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3, 4.99),
-  createData('Eclair', 262, 16.0, 24, 6.0, 3.79),
-  createData('Cupcake', 305, 3.7, 67, 4.3, 2.5),
-  createData('Gingerbread', 356, 16.0, 49, 3.9, 1.5)
+  createData('Visa', 'JP', '6.0', 'true', '11/2022'),
+  createData('Master Card', 'FR', '9.0', 'true', '12/2022'),
+  createData('American Express', 'US', '16.0', 'false', '1/2022'),
+  createData('Discover', 'IN', '25', 'false', '2/2022')
 ]
 
 const TableCollapsible = () => {
@@ -116,16 +131,16 @@ const TableCollapsible = () => {
         <TableHead>
           <TableRow>
             <TableCell />
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align='right'>Calories</TableCell>
-            <TableCell align='right'>Fat (g)</TableCell>
-            <TableCell align='right'>Carbs (g)</TableCell>
-            <TableCell align='right'>Protein (g)</TableCell>
+            <TableCell>Type</TableCell>
+            <TableCell align='right'>Country</TableCell>
+            <TableCell align='right'>VBV (true)</TableCell>
+            <TableCell align='right'>Price</TableCell>
+            <TableCell align='right'>Expiration</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map(row => (
-            <Row key={row.name} row={row} />
+            <Row key={row.type} row={row} />
           ))}
         </TableBody>
       </Table>

@@ -11,7 +11,17 @@ import CreditCardOutline from 'mdi-material-ui/CreditCardOutline'
 import AccountPlusOutline from 'mdi-material-ui/AccountPlusOutline'
 import AlertCircleOutline from 'mdi-material-ui/AlertCircleOutline'
 import GoogleCirclesExtended from 'mdi-material-ui/GoogleCirclesExtended'
-import { CreditCard, CreditCardCheck, CreditCardLock, Gift, TuneVertical, Bitcoin, Cash } from 'mdi-material-ui'
+import {
+  CreditCard,
+  Shopping,
+  CreditCardCheck,
+  CreditCardLock,
+  Gift,
+  TuneVertical,
+  Bitcoin,
+  Cash,
+  BellAlert
+} from 'mdi-material-ui'
 
 // ** Type import
 import { VerticalNavItemsType } from 'src/@core/layouts/types'
@@ -30,22 +40,18 @@ const navigation = (): VerticalNavItemsType => {
       sectionTitle: 'Sections'
     },
     {
-      title: 'CC',
+      title: 'Cedit Card',
       icon: CreditCard,
-      path: '/cc'
-    },
-    {
-      title: 'VBV',
-      icon: CreditCardCheck,
-      path: '/vbv'
-    },
-    {
-      title: 'Gift Card',
-      icon: Gift,
-      path: '/giftcard'
+      path: '/ceditcard'
     },
     {
       sectionTitle: 'Profile Settings'
+    },
+
+    {
+      title: 'Account Settings',
+      icon: AccountCogOutline,
+      path: '/account-settings'
     },
     {
       title: 'Balance',
@@ -53,9 +59,14 @@ const navigation = (): VerticalNavItemsType => {
       path: '/balance'
     },
     {
-      title: 'Account Settings',
-      icon: AccountCogOutline,
-      path: '/account-settings'
+      title: 'Orders',
+      icon: Shopping,
+      path: '/orders'
+    },
+    {
+      title: 'Tickets',
+      icon: BellAlert,
+      path: '/tickets'
     }
   ]
 
@@ -89,12 +100,6 @@ const navigation = (): VerticalNavItemsType => {
           title: 'Form Layouts',
           icon: CubeOutline,
           path: '/admin/form-layouts'
-        },
-
-        {
-          title: 'Typography',
-          icon: FormatLetterCase,
-          path: '/typography'
         },
         {
           title: 'Icons',

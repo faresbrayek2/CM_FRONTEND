@@ -6,49 +6,46 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import Button from '@mui/material/Button'
+import { React } from 'mdi-material-ui'
 
-const createData = (type: string, status: string, seller: string, price: string, createdDate: string) => {
-  return { type, status, seller, price, createdDate }
+const createData = (ticketNumber: string, status: string, title: string, lastReply: string, lastRepliedBy: string) => {
+  return { ticketNumber, status, title, lastReply, lastRepliedBy }
 }
 
 const getStatusStyle = (status: string) => {
-  switch (status) {
-    case 'Refunded':
-      return { color: 'green', fontWeight: 'bold' }
-    case 'Pending':
-      return { color: 'orange', fontWeight: 'bold' }
-    case 'Rejected':
-      return { color: 'red', fontWeight: 'bold' }
-    default:
-      return {}
+  let style = {
+    fontWeight: 'bold',
+    color: status === 'Closed' ? 'green' : 'blue' // Customize colors for 'Closed' and 'Open'
   }
+
+  return style
 }
 
 const rows = [
-  createData('Visa', 'Refunded', 'Seller A', '100', '2023-09-30'),
-  createData('Master Card', 'Pending', 'Seller B', '200', '2023-09-29'),
-  createData('American Express', 'Rejected', 'Seller C', '150', '2023-09-28'),
-  createData('Discover', 'Pending', 'Seller D', '50', '2023-09-27')
+  createData('T12345', 'Closed', 'Issue with Product A', '2023-09-30', 'Admin'),
+  createData('T12346', 'Open', 'Billing Inquiry', '2023-09-29', 'Buyer A'),
+  createData('T12347', 'Closed', 'Technical Support Request', '2023-09-28', 'Admin'),
+  createData('T12348', 'Open', 'Account Access Issue', '2023-09-27', 'Buyer A')
 ]
 
-const TableReports = () => {
+const TableTickets = () => {
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+      <Table sx={{ minWidth: 650 }} aria-label='ticket table'>
         <TableHead>
           <TableRow>
-            <TableCell>Type</TableCell>
+            <TableCell>Ticket Number</TableCell>
             <TableCell>Status</TableCell>
-            <TableCell>Seller</TableCell>
-            <TableCell align='right'>Price</TableCell>
-            <TableCell align='right'>Created Date</TableCell>
+            <TableCell>Title</TableCell>
+            <TableCell>Last Reply</TableCell>
+            <TableCell>Last Replied By</TableCell>
             <TableCell align='right'>View</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map(row => (
             <TableRow
-              key={row.type}
+              key={row.ticketNumber}
               sx={{
                 '&:last-of-type td, &:last-of-type th': {
                   border: 0
@@ -56,16 +53,16 @@ const TableReports = () => {
               }}
             >
               <TableCell component='th' scope='row'>
-                {row.type}
+                {row.ticketNumber}
               </TableCell>
               <TableCell>
                 <span style={getStatusStyle(row.status)}>{row.status}</span>
               </TableCell>
-              <TableCell>{row.seller}</TableCell>
-              <TableCell align='right'>{row.price}</TableCell>
-              <TableCell align='right'>{row.createdDate}</TableCell>
+              <TableCell>{row.title}</TableCell>
+              <TableCell>{row.lastReply}</TableCell>
+              <TableCell>{row.lastRepliedBy}</TableCell>
               <TableCell align='right'>
-                {/* Render a View button for credit cards */}
+                {/* Render a View button for tickets */}
                 <Button variant='contained' color='primary'>
                   View
                 </Button>
@@ -78,4 +75,4 @@ const TableReports = () => {
   )
 }
 
-export default TableReports
+export default TableTickets
